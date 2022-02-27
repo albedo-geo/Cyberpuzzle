@@ -1,6 +1,8 @@
 import random
 import rich
 from typing import Any
+import pyautogui
+import time
 
 __all__ = ['WORDS', "generate_puzzle", "print_puzzle", "print_path", "is_subsequence"]
 
@@ -30,7 +32,9 @@ def print_puzzle(puzzle: list[list[str]]) -> None:
 def print_path(puzzle: list[list[str]], path: list[tuple[int, int]]) -> None:
     for y in range(len(puzzle)):
         for x in range(len(puzzle[0])):
-            if (x, y) in path:
+            if (x, y) == path[0]:
+                rich.print(f'[red]{puzzle[y][x]}[/red]', end=' ')
+            elif (x, y) in path:
                 rich.print(f'[cyan]{puzzle[y][x]}[/cyan]', end=' ')
             else:
                 print(puzzle[y][x], end=' ')
@@ -58,7 +62,18 @@ def is_subsequence(array: list[Any], sub: list[Any]) -> bool:
     return False
 
 
+def click_coors(coors, offset=(0, 0)):
+    time.sleep(3)
+    for coor in coors:
+        coor = (coor[0] + offset[0], coor[1] + offset[1])
+        pyautogui.moveTo(coor[0], coor[1], duration=0.35)
+        pyautogui.click()
+        print(coor)
+        time.sleep(0.5)
+
+
 if __name__ == '__main__':
-    a = [(1, 0), (0, 1), (0, 0), (1, 2)]
-    b = [(0, 1), (0, 0)]
-    print(is_subsequence(a, b))
+    # a = [(1, 0), (0, 1), (0, 0), (1, 2)]
+    # b = [(0, 1), (0, 0)]
+    # print(is_subsequence(a, b))
+    click_coors([[914, 570], [900, 1000], [1000, 1000], [1000, 900]])

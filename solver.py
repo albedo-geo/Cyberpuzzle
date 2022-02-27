@@ -65,7 +65,7 @@ def find_best_path(puzzle: list[list[str]], targets: list[list[str]], max_steps:
             # then there is no need to go further
             if score == max_pos_score:
                 return
-            if len(path) > max_steps:
+            if len(path) >= max_steps:
                 return
 
         x, y = pos
